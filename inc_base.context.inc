@@ -24,25 +24,25 @@ function inc_base_context_default_contexts() {
         'views-incubator_map-block_2' => array(
           'module' => 'views',
           'delta' => 'incubator_map-block_2',
-          'region' => 'sidebar_last',
+          'region' => 'sidebar_first',
           'weight' => 0,
         ),
         'inc_glue-core-activities' => array(
           'module' => 'inc_glue',
           'delta' => 'core-activities',
-          'region' => 'sidebar_last',
+          'region' => 'sidebar_first',
           'weight' => 1,
         ),
         'views-incubator_map-block_1' => array(
           'module' => 'views',
           'delta' => 'incubator_map-block_1',
-          'region' => 'sidebar_last',
+          'region' => 'sidebar_first',
           'weight' => 2,
         ),
         'inc_glue-invitation' => array(
           'module' => 'inc_glue',
           'delta' => 'invitation',
-          'region' => 'sidebar_last',
+          'region' => 'sidebar_first',
           'weight' => 3,
         ),
         'aggregator-feed-1' => array(

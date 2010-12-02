@@ -2,20 +2,6 @@
 
 include_once('inc_base.features.inc');
 
-/**
- * Implementation of hook_menu()
- */
-function inc_base_menu() {
-  $items['admin/settings/location/site-default'] = array(
-    'title' => 'Site Default Location',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('inc_base_location_form'),
-    'access arguments' => array('administer site configuration'),
-    'file' => 'inc_base.admin.inc',
-  );
-  return $items;
-}
-
 function inc_base_system_info_alter(&$info, $file) {
   if ($info['name'] == "Features Tests") {
     global $user;
@@ -42,83 +28,6 @@ function inc_base_form_alter(&$form, &$form_state, $form_id) {
       if (!variable_get('inc_glue_activity_vid', 0)) { 
         $form['taxonomy']['#type'] = 'fieldset';
         $form['taxonomy']['#title'] = t('Tags and Categories');
-      }
-    }
-    if (isset($form['locations']) && !isset($form['location'])) {
-      // Put locations in a fieldset
-      $form['location'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Locations'),
-        'locations' => $form['locations'],
-        '#weight' => $form['locations']['#weight'],
-      );
-      unset($form['locations']);
-      if (in_array($form['type']['#value'], array('event', 'blog', 'community_blog', 'video', 'news'))) {
-
-        // Default location
-        $lid = $form['locations'][0]['#default_value']['lid'];
-        $lid = $lid ? $lid : 0;
-        $default = $lid;
-        $permanent_lids = array();
-        $options[$lid] = $lid ? t('Custom') : t('Custom / None');
-        if ($lid) {
-          $settings[$lid] = $form['locations'][0]['#default_value'];
-        }
-        else {
-          foreach (array_keys($form['location']['locations'][0]['#location_settings']['form']['fields']) as $key) {
-            if ($key != 'country') {
-              $settings[0][$key] = '';
-            }
-          }
-        }
-        $settings['def'] = $lid;
-
-        $q = db_query("SELECT li.*, l.*, n.title FROM {location_instance} li
-                        LEFT JOIN {location} l ON l.lid = li.lid
-                        LEFT JOIN {node} n ON n.vid = li.vid WHERE
-                        li.genid = 'incubator' OR li.uid OR n.type IN ('loc', 'facility')
-                        ORDER BY li.genid DESC, li.uid DESC, n.title ASC");
-        while ($r = db_fetch_array($q)) {
-          if ($r['genid'] == 'incubator') {
-            $t = t('Site Default : ') . ($r['street'] ? $r['street'] . ', ' : '') . $r['city'] . ', ' . $r['province'];;
-            if (!$lid) {
-              $default = $r['lid'];
-              foreach ($r as $key => $value) {
-                if (isset($form['location']['locations'][0]['#location_settings']['form']['fields'][$key]['default'])) {
-                  $form['location']['locations'][0]['#location_settings']['form']['fields'][$key]['default'] = $r[$key];
-                }
-              }
-            }
-            $permanent_lids[] = $r['lid'];
-          }
-          elseif ($r['uid']) {
-            $t = t('User Location : ') . ($r['street'] ? $r['street'] . ', ' : '') . $r['city'] . ', ' . $r['province'];
-            $permanent_lids[] = $r['lid'];
-          }
-          elseif ($r['title']) {
-            $t = $r['title'] . ' : ' . ($r['street'] ? $r['street'] . ', ' : '') . $r['city'] . ', ' . $r['province'];;
-            if ($form['#node']->vid != $r['vid']) {
-              $permanent_lids[] = $r['lid'];
-            }
-          }
-          $options[$r['lid']] = $t;
-          $settings[$r['lid']] = $r;
-        }
-
-        $form['location_chooser'] = array(
-          '#type' => 'select',
-          '#options' => $options,
-          '#title' => t('Choose location'),
-          '#weight' => 2,
-          '#default_value' => $default,
-        );
-        $form['location_permanent_lids'] = array(
-          '#type' => 'value',
-          '#value' => $permanent_lids,
-        );
-        array_unshift($form['#validate'], 'inc_base_location_validate');
-        drupal_add_js(drupal_get_path('module', 'inc_base') . '/js/inc_base_location.js');
-        drupal_add_js(array('inc_base_location' => $settings), 'setting');
       }
     }
   }
@@ -155,17 +64,4 @@ function inc_base_form_alter(&$form, &$form_state, $form_id) {
 
   }
 
-}
-
-function inc_base_location_validate($form, &$form_state) {
-  // get the chosen location
-  $chooser = $form_state['values']['location_chooser'];
-  // only change the location if the one chosen is permanent (see form alter hook for permanent_lids)
-  if (in_array($chooser, $form_state['values']['location_permanent_lids'])) {
-    // load the location from lid
-    $location = location_load_location($chooser);
-    // fill the form location values with the values from the loaded location
-    // (this will overwrite user input if javascript is disabled)
-    $form_state['values']['locations'][0] = array_intersect_key($location, $form_state['values']['locations'][0]);
-  }
 }

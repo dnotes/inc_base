@@ -1,0 +1,48 @@
+/* $Id$ */
+
+/* Node Edit Forms */
+
+div#edit-field-main-image-0-ahah-wrapper,
+div.node-form-float-right {
+  width: 320px;
+  float:right;
+  clear:right;
+  margin-left:19px;
+}
+div#edit-field-main-image-0-ahah-wrapper .filefield-element .widget-preview {
+  max-width:60%;
+  border-right:none;
+}
+div#edit-field-main-image-0-ahah-wrapper .filefield-element .widget-edit {
+  max-width:90%;
+}
+div.node-form-float-left {
+  margin-right:340px;
+  position:relative;
+}
+div.teaser-checkbox {
+  position:absolute;
+  right:29px;
+}
+div.node-form-float-left div#edit-body-wrapper div.resizable-textarea {
+  width: 99%;
+}
+
+div.inc-glue-core-activities-checkboxes fieldset {
+  border:0;
+  margin:0;
+  padding:0;
+}
+
+
+body.node-edit div#main-group {
+  width:100%;
+}
+body.node-edit div#sidebar-first,
+body.node-edit div#sidebar-last,
+body.node-edit div#sidebar,
+body.node-edit div#sidebar-left,
+body.node-edit div#sidebar-right {
+  display:none;
+}
+/* */

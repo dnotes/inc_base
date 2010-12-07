@@ -758,18 +758,18 @@ function inc_base_views_default_views() {
   ));
   $handler->override_option('items_per_page', 0);
   $handler->override_option('use_more', 1);
-  $handler->override_option('use_more_always', 0);
+  $handler->override_option('use_more_always', 1);
   $handler->override_option('use_more_text', 'view full page map...');
   $handler->override_option('style_plugin', 'gmap');
   $handler->override_option('style_options', array(
     'grouping' => '',
-    'macro' => '[gmap id=incubator_map |width=100% |height=240px ]',
+    'macro' => '[gmap id=incubator_map |width=100% |height=500px ]',
     'datasource' => 'location',
     'latfield' => 'title',
     'lonfield' => 'title',
     'markers' => 'taxonomy',
     'markerfield' => 'title',
-    'markertype' => 'small red',
+    'markertype' => 'big red',
     'center_on_nodearg' => 0,
     'center_on_nodearg_arg' => 'term_node_tid_depth',
     'highlight_nodearg' => 0,
@@ -902,8 +902,25 @@ function inc_base_views_default_views() {
     ),
   ));
   $handler->override_option('items_per_page', 149);
+  $handler->override_option('style_options', array(
+    'grouping' => '',
+    'macro' => '[gmap id=incubator_map_block |width=100% |height=240px ]',
+    'datasource' => 'location',
+    'latfield' => 'title',
+    'lonfield' => 'title',
+    'markers' => 'taxonomy',
+    'markerfield' => 'title',
+    'markertype' => 'big red',
+    'center_on_nodearg' => 0,
+    'center_on_nodearg_arg' => 'term_node_tid_depth',
+    'highlight_nodearg' => 0,
+    'highlight_nodearg_arg' => 'term_node_tid_depth',
+    'highlight_nodearg_color' => '#FF0000',
+    'tooltipenabled' => 0,
+    'tooltipfield' => 'title',
+  ));
   $handler->override_option('block_description', '');
-  $handler->override_option('block_caching', '8');
+  $handler->override_option('block_caching', '-1');
   $handler = $view->new_display('page', 'Page', 'page_1');
   $handler->override_option('title', 'Community Map');
   $handler->override_option('path', 'map');
@@ -1145,9 +1162,10 @@ function inc_base_views_default_views() {
   ));
   $handler->override_option('items_per_page', 1);
   $handler->override_option('use_more', 0);
+  $handler->override_option('use_more_always', 0);
   $handler->override_option('style_options', array(
     'grouping' => '',
-    'macro' => '[gmap |id=single_node |width=100% |height=240px ]',
+    'macro' => '[gmap |id=incubator_map_node |width=100% |height=240px ]',
     'datasource' => 'location',
     'latfield' => 'title',
     'lonfield' => 'title',

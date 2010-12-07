@@ -188,6 +188,58 @@ function inc_base_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'location_chooser_default_source';
+  $strongarm->value = 1;
+
+  $export['location_chooser_default_source'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'location_chooser_fieldset';
+  $strongarm->value = '1';
+
+  $export['location_chooser_fieldset'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'location_chooser_node_sources';
+  $strongarm->value = array(
+    0 => 'facility',
+    1 => 'loc',
+  );
+
+  $export['location_chooser_node_sources'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'location_chooser_reuse_source_locations';
+  $strongarm->value = 1;
+
+  $export['location_chooser_reuse_source_locations'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'location_chooser_targets';
+  $strongarm->value = array(
+    0 => 'blog',
+    1 => 'community_blog',
+    2 => 'event',
+    3 => 'news',
+    4 => 'page',
+    5 => 'video',
+  );
+
+  $export['location_chooser_targets'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'location_chooser_user_source';
+  $strongarm->value = 1;
+
+  $export['location_chooser_user_source'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'location_settings_node_page';
   $strongarm->value = array(
     'multiple' => array(
